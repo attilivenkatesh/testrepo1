@@ -1,0 +1,40 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        //classpath 'io.github.robwin:jgitflow-gradle-plugin:0.6.0'
+        classpath 'net.researchgate:gradle-release:2.6.0'
+    }
+}
+
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+//apply plugin: 'io.github.robwin.jgitflow'
+apply plugin: 'net.researchgate.release'
+
+group 'org.example'
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+
+release{
+    failOnUpdateNeeded = false
+    tagTemplate = 'v'+'${version}'
+    versionPropertyFile = 'gradle.properties'
+    git {
+        requireBranch = 'release/*.*|master|feature/*.*|develop'
+    }
+
+
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
